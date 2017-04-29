@@ -9,73 +9,73 @@
 
 main():
     _gauth = True
-	FOREVER :
-		key = Lecture_RFID()
-		key = Debouncing_RFID(key)
-		IF key NOT EQUAL 0 :
-			auth = WhiteListing(key)
-			CheckState(auth)
-		ELSE :
-			CheckState(True)
-			Sleep(_TIM * _TMUL) // Extra sleep.
-		Sleep(_TIM)
-	RETURN
-	
-	
+    FOREVER :
+        key = Lecture_RFID()
+        key = Debouncing_RFID(key)
+        IF key NOT EQUAL 0 :
+            auth = WhiteListing(key)
+            CheckState(auth)
+        ELSE :
+            CheckState(True)
+            Sleep(_TIM * _TMUL) // Extra sleep.
+        Sleep(_TIM)
+    RETURN
+
+
 // Complexity of this algorithm is theta(n), where n=_DEB,
 // in worst and best case; which is linear.
 Debouncing_RFID(key):
     moy.add(key)
-	IF moy.length > _DEB :
-	    moy.pop_first()
-	// Grab the must reccurent RFID in moy. 
-	ckey = 0
-	ccount = 0
-	tmpkey = 0
-	FOR i=1 TO moy.length :
-	    IF moy[i] NOT EQUAL ckey :
-		    IF moy[i] NOT EQUAL tmpkey :
+    IF moy.length > _DEB :
+        moy.pop_first()
+    // Grab the must reccurent RFID in moy.
+    ckey = 0
+    ccount = 0
+    tmpkey = 0
+    FOR i=1 TO moy.length :
+        IF moy[i] NOT EQUAL ckey :
+            IF moy[i] NOT EQUAL tmpkey :
                 tmpcount = 1
-				tmpkey = moy[i]
+                tmpkey = moy[i]
             ELSE :
                 tmpcount = tmpcount + 1
-			IF tmpcount > ccount :
-			    ckey = tmpkey
-			    ccount = tmpcount
+            IF tmpcount > ccount :
+                ckey = tmpkey
+                ccount = tmpcount
         ELSE :
-		    ccount = ccount + 1
-	RETURN ckey
+            ccount = ccount + 1
+    RETURN ckey
 
-	
+
 WhiteListing(key):
     FOR i=1 TO _WHITELIST.length :
-	    IF _WHITELIST[i] EQUAL key :
-		    RETURN True
-	RETURN False
+        IF _WHITELIST[i] EQUAL key :
+            RETURN True
+    RETURN False
 
 
 CheckState(auth)
-	if _gauth EQUAL auth :
-	    RETURN
-	_gauth = auth
-	if _gauth EQUAL True :
-	    OpenTray()
-	else :
-	    CloseTray()
-	RETURN
-	
-	
+    if _gauth EQUAL auth :
+        RETURN
+    _gauth = auth
+    if _gauth EQUAL True :
+        OpenTray()
+    else :
+        CloseTray()
+    RETURN
+
+
 OpenTray():
     // Open tray.
-	RETURN
-	
-	
+    RETURN
+
+
 CloseTray():
     // Close tray.
-	RETURN
-	
-	
+    RETURN
+
+
 Lecture_RFID():
-	// Read current RFID.
-	RETURN key
-	
+    // Read current RFID.
+    RETURN key
+
