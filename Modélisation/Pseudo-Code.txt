@@ -1,5 +1,6 @@
-// Marc-André Jean
-// 28(DD) - 04(MM) - 2017(YYYY)
+﻿// Marc-André Jean
+// 30(DD) - 04(MM) - 2017(YYYY)
+// version 1.1
 
 // _TIM is a constant; time unit.
 // _TMUL is a constant; multiplier for time unit.
@@ -11,7 +12,7 @@ main():
     _gauth = True
     FOREVER :
         key = Lecture_RFID()
-        key = Debouncing_RFID(key)
+        // key = Debouncing_RFID(key) // Deprecated.
         IF key NOT EQUAL 0 :
             auth = WhiteListing(key)
             CheckState(auth)
@@ -21,7 +22,7 @@ main():
         Sleep(_TIM)
     RETURN
 
-
+// Deprecated. Not needed anymore.
 // Complexity of this algorithm is theta(n), where n=_DEB,
 // in worst and best case; which is linear.
 Debouncing_RFID(key):
